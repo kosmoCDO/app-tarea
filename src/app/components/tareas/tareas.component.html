@@ -1,0 +1,37 @@
+<mat-grid-list cols="2" rowHeight="2:1">
+
+  <mat-grid-tile>
+    <div class="lista-tareas-container">
+      <h2>Lista de Tareas</h2>
+      <mat-selection-list *ngIf="listaTareas.length > 0 else msgError" #shoes (selectionChange)="onEstadoSeleccionado($event)">
+        <mat-list-option *ngFor="let tarea of listaTareas; let i = index" [value]="tarea">
+            <span>{{ i + 1 }}.</span>
+            <span [ngStyle]="{'text-decoration-line': tarea.estado === true ? 'line-through' : ''}">{{tarea.nombre}} - </span>
+            <strong>{{ tarea.estado === false ? 'No completada' : 'Completada' }}</strong>
+          </mat-list-option>
+      </mat-selection-list>
+
+
+      <ng-template #msgError>
+        <mat-card>
+          <mat-card-content>No hay ningúna tarea!</mat-card-content>
+        </mat-card>
+      </ng-template>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <div class="tarea">
+      <h2>{{ 'Ingresar una nueva Tarea' | uppercase }}</h2>
+      <form (submit)="registrarTarea()" class="form-tarea">
+        <mat-form-field>
+          <mat-label>Nueva Tarea</mat-label>
+            <input matInput [(ngModel)]="nombreTarea" name="tarea">
+        </mat-form-field>
+        <button type="submit" mat-raised-button color="primary">Registrar</button>
+      </form>
+    </div>
+  </mat-grid-tile>
+
+
+</mat-grid-list>
